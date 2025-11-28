@@ -1,0 +1,63 @@
+@startuml
+class Usuario {
+    +nome: string
+    +email: string
+    +telefone: string
+    +senha: string
+    +tipo_perfil: string
+    +data_cadastro: datetime
+}
+
+class Empresa {
+    usuario: Usuario
+}
+
+class Cliente {
+    usuario: Usuario
+}
+
+class Profissional {
+    +nome: string
+    +empresa: Empresa
+}
+
+class Servico {
+    +nome: string
+    +descricao: string
+    +valor: decimal
+    +duracao_minutos: int
+    +ativo: boolean
+}
+
+class HorarioDisponivel {
+    +id_horario: string
+    +id_profissional: string
+    +dia_semana: string
+    +hora_inicio: time
+    +hora_fim: time
+    +ativo: boolean
+}
+
+class Agendamento {
+    +cliente: Cliente
+    +profissional: Profissional
+    +servico: Servico
+    +data_agendamento: date
+    +hora_inicio: time
+    +hora_fim: time
+    +status: string
+    +data_criacao: datetime
+    +data_cancelamento: datetime
+}
+
+' --- Associações ---
+Usuario "1" -- "0...*" Cliente : possui >
+Usuario "1" -- "0...*" Empresa : possui >
+Empresa "1" -- "0...*" Profissional
+Empresa "1" -- "0...*" Servico : cadastra >
+Profissional "1" -- "0..*" HorarioDisponivel : define >
+Profissional "0...*" -- "0...*" Servico : >
+Profissional "1" -- "0...*" Agendamento : atende >
+Cliente "1" -- "0...*" Agendamento : realiza >
+Servico "1" -- "0...*" Agendamento : possui >
+@enduml
