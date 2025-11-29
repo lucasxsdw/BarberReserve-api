@@ -8,7 +8,7 @@ class Usuario {
     +data_cadastro: datetime
 }
 
-class Empresa {
+class Salao {
     usuario: Usuario
 }
 

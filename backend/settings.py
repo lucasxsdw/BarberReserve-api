@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     
     'api',
-    'servico',
+    #'servico',
+    'profissional'
 
 ]
 
