@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     
     'api',
+    'servico',
+
 ]
 
 REST_FRAMEWORK = {

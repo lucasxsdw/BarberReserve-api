@@ -26,7 +26,6 @@ class Servico {
     +descricao: string
     +valor: decimal
     +duracao_minutos: int
-    +ativo: boolean
 }
 
 class HorarioDisponivel {
