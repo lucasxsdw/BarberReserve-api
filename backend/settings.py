@@ -42,11 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     
-    'api',
     'servico',
     'profissional',
-    #'agendamento',
-    #'servico',
+    'agendamento',
     'usuario',
 
 ]

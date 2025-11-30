@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from usuario.models import CustomUser  # 👈 usa o seu modelo novo
+from usuario.models import CustomUser
 
 class RegisterSerializer(serializers.ModelSerializer):
     full_name = serializers.CharField(required=True)

@@ -12,7 +12,7 @@ class ServicoSerializer(serializers.ModelSerializer):
         model = Servico
         fields = [
             "id", "nome", "descricao", "valor", "duracao_minutos",
-            "ativo", "profissionais"
+            "profissionais"
         ]
 
     def create(self, validated_data):

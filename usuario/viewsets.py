@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from api.serializers import RegisterSerializer
+from usuario.serializers import RegisterSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 

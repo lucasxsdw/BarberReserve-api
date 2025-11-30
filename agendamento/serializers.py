@@ -7,8 +7,7 @@ class AgendamentoSerializer(serializers.ModelSerializer):
         model = Agendamento
         fields = [
             "id", "cliente", "profissional", "servico",
-            "data_agendada", "hora_inicio", "hora_fim",
-            "status", "data_criacao", "data_cancelamento"
+            "data_agendada", "hora_inicio", "hora_fim"
         ]
         read_only_fields = ("id", "data_criacao",)
 

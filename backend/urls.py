@@ -26,11 +26,9 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path("admin/", admin.site.urls),
-    path("api/", include("api.urls")),   
-    path("servico/", include("servico.urls")),
-    path("profissional/", include("profissional.urls")),
-    #path("agendamento/", include("agendamento.urls")),
+    path("api/usuario/", include("usuario.urls")),   
+    path("api/servico/", include("servico.urls")),
+    path("api/profissional/", include("profissional.urls")),
+    path("api/agendamento/", include("agendamento.urls")),
 ]

@@ -14,7 +14,7 @@ staticfiles
 # Backup files # 
 *.bak 
 
- *.sqlite3
+*.sqlite3
 
 venv/
 .venv/
