@@ -18,7 +18,7 @@ class Cliente {
 
 class Profissional {
     +nome: string
-    +empresa: Empresa
+    +salao: Salao
 }
 
 class Servico {
@@ -28,20 +28,11 @@ class Servico {
     +duracao_minutos: int
 }
 
-class HorarioDisponivel {
-    +id_horario: string
-    +id_profissional: string
-    +dia_semana: string
-    +hora_inicio: time
-    +hora_fim: time
-    +ativo: boolean
-}
-
 class Agendamento {
     +cliente: Cliente
     +profissional: Profissional
     +servico: Servico
-    +data_agendamento: date
+    +data_agendada: date
     +hora_inicio: time
     +hora_fim: time
     +status: string
@@ -50,11 +41,10 @@ class Agendamento {
 }
 
 ' --- Associações ---
-Usuario "1" -- "0...*" Cliente : possui >
-Usuario "1" -- "0...*" Empresa : possui >
-Empresa "1" -- "0...*" Profissional
-Empresa "1" -- "0...*" Servico : cadastra >
-Profissional "1" -- "0..*" HorarioDisponivel : define >
+Usuario "1" -- "0...*" Cliente : >
+Usuario "1" -- "0...*" Salao : >
+Salao "1" -- "0...*" Profissional
+Salao "1" -- "0...*" Servico : cadastra >
 Profissional "0...*" -- "0...*" Servico : >
 Profissional "1" -- "0...*" Agendamento : atende >
 Cliente "1" -- "0...*" Agendamento : realiza >
