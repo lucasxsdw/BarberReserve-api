@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'profissional',
     'agendamento',
     'usuario',
+    'cliente',
+    'salao',
 
 ]
 

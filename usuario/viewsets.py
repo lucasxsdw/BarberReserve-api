@@ -21,7 +21,7 @@ class RegisterView(APIView):
                     "id": user.id,
                     "name": user.first_name,
                     "email": user.email,
-                    "telefone": user.telefone,  # 👈 agora existe de verdade
+                    "telefone": user.telefone,
                 },
                 status=status.HTTP_200_OK,
             )
@@ -65,14 +65,14 @@ class UsuarioPerfilView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        user = request.user  # instância de CustomUser
+        user = request.user
 
         return Response(
             {
                 "id": user.id,
                 "nome": user.first_name or user.username,
                 "email": user.email,
-                "telefone": user.telefone,  # 👈 aqui também
+                "telefone": user.telefone,
             },
             status=status.HTTP_200_OK,
         )
