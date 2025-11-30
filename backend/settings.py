@@ -46,8 +46,12 @@ INSTALLED_APPS = [
     'servico',
     'profissional',
     #'agendamento',
+    #'servico',
+    'usuario',
 
 ]
+
+AUTH_USER_MODEL = "usuario.CustomUser"
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
