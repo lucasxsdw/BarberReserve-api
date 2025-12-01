@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Salao
 
-# Register your models here.
+@admin.register(Salao)
+class SalaoAdmin(admin.ModelAdmin):
+    list_display = ("id", "nome", "usuario")

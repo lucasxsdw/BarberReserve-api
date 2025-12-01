@@ -1,8 +1,12 @@
 from django.urls import path
 from .viewsets import RegisterView, LoginView, UsuarioPerfilView
+from .views import MeView  # <-- IMPORTANTE
 
 urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
     path("login/", LoginView.as_view(), name="login"),
     path("usuario-perfil/", UsuarioPerfilView.as_view(), name="usuario-perfil"),
+
+    # NOVO ENDPOINT
+    path("me/", MeView.as_view(), name="me"),
 ]

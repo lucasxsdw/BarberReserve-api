@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from usuario.serializers import RegisterSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.db import IntegrityError
 
 
 class RegisterView(APIView):
@@ -13,20 +14,31 @@ class RegisterView(APIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
 
-        if serializer.is_valid():
-            user = serializer.save()
+        if not serializer.is_valid():
+            # validação do serializer (campos obrigatórios, formato, etc.)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+        try:
+            # aqui pode estourar IntegrityError se o email/username já existir
+            user = serializer.save()
+        except IntegrityError:
             return Response(
                 {
-                    "id": user.id,
-                    "name": user.first_name,
-                    "email": user.email,
-                    "telefone": user.telefone,
+                    "detail": "Já existe um usuário com esse e-mail."
                 },
-                status=status.HTTP_200_OK,
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # se deu tudo certo, devolve os dados do novo usuário
+        return Response(
+            {
+                "id": user.id,
+                "name": user.first_name,
+                "email": user.email,
+                "telefone": user.telefone,
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class LoginView(APIView):

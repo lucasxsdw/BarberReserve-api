@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from usuario.models import CustomUser
+from .models import CustomUser
 
+# 1. Usado no cadastro
 class RegisterSerializer(serializers.ModelSerializer):
     full_name = serializers.CharField(required=True)
     telefone = serializers.CharField(required=True)
@@ -27,3 +28,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(senha)
         user.save()
         return user
+
+
+# 2. Usado para /api/me/, atualizar tipo_perfil, preencher telas
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'first_name', 'email', 'telefone', 'tipo_perfil']
+        read_only_fields = ['id', 'email']
