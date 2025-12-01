@@ -11,23 +11,23 @@ class ServicoViewSet(ModelViewSet):
     serializer_class = ServicoSerializer
 
     def get_queryset(self):
-        empresa_id = self.kwargs.get("empresa_id")
+        salao_id = self.kwargs.get("salao_id")
 
-        if empresa_id:
-            return Servico.objects.filter(empresa_id=empresa_id, ativo=True)
+        if salao_id:
+            return Servico.objects.filter(salao_id=salao_id)
 
         user = self.request.user
-        if hasattr(user, "empresa"):
-            return Servico.objects.filter(empresa=user.empresa)
+        if hasattr(user, "salao"):
+            return Servico.objects.filter(salao=user.salao)
 
         return Servico.objects.none()
 
     def perform_create(self, serializer):
         user = self.request.user
 
-        if not hasattr(user, "empresa"):
-            raise PermissionError("Somente empresas podem cadastrar serviços.")
+        if not hasattr(user, "salao"):
+            raise PermissionError("Somente salaos podem cadastrar serviços.")
 
-        serializer.save(empresa=user.empresa)
+        serializer.save(salao=user.salao)
 
    

@@ -24,7 +24,7 @@ class Profissional {
 class Servico {
     +nome: string
     +descricao: string
-    +valor: decimal
+    +preco: decimal
     +duracao_minutos: int
 }
 
