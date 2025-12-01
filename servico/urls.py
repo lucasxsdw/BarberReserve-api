@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .viewsets import ServicoViewSet
 
 router = DefaultRouter()
-router.register("servicos", ServicoViewSet, basename="servico")
+router.register("servico", ServicoViewSet, basename="servico")
 
 
 urlpatterns = [

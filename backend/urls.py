@@ -28,8 +28,8 @@ urlpatterns = [
 
     path("admin/", admin.site.urls),
     path("api/usuario/", include("usuario.urls")),   
-    path("api/servico/", include("servico.urls")),
-    path("api/profissional/", include("profissional.urls")),
-    path("api/agendamento/", include("agendamento.urls")),
+    path("api/", include("servico.urls")),
+    path("api/", include("profissional.urls")),
+    path("api/", include("agendamento.urls")),
     path("api/salao/", include("salao.urls")),
 ]

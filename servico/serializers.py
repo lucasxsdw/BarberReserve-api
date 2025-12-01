@@ -1,12 +1,9 @@
 from rest_framework import serializers
 from .models import Servico
-from profissional.models import Profissional
+from profissional.serializers import ProfissionalSerializer
 
 class ServicoSerializer(serializers.ModelSerializer):
-    profissionais = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=Profissional.objects.all()
-    )
+    profissionais = ProfissionalSerializer(many=True, read_only=True)
 
     class Meta:
         model = Servico

@@ -11,9 +11,9 @@ class ServicoViewSet(ModelViewSet):
     serializer_class = ServicoSerializer
 
     def get_queryset(self):
-        salao_id = self.kwargs.get("salao_id")
-
-        if salao_id:
+        salao_id = self.request.query_params.get('salao_id', None)
+        
+        if salao_id is not None:
             return Servico.objects.filter(salao_id=salao_id)
 
         user = self.request.user
