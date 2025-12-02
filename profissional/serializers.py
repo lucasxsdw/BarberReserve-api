@@ -4,4 +4,4 @@ from .models import Profissional
 class ProfissionalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profissional
-        fields = ["id", "nome_completo", "telefone"]
+        fields = ['id', 'nome']  # o salao vai ser inferido pelo backend
