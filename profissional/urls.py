@@ -1,8 +1,7 @@
-# profissional/urls.py
-from rest_framework.routers import DefaultRouter
+from rest_framework import routers
 from .views import ProfissionalViewSet
 
 router = routers.DefaultRouter()
-router.register("profissional", ProfissionalViewSet)
+router.register("", ProfissionalViewSet, basename="profissional")
 
 urlpatterns = router.urls
