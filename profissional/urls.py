@@ -1,7 +1,8 @@
-from django.urls import path
-from .views import ProfissionalListCreateView
+# profissional/urls.py
+from rest_framework.routers import DefaultRouter
+from .views import ProfissionalViewSet
 
-urlpatterns = [
-    # /api/profissional/
-    path('', ProfissionalListCreateView.as_view(), name='profissional-list-create'),
-]
+router = DefaultRouter()
+router.register("", ProfissionalViewSet, basename="profissional")
+
+urlpatterns = router.urls

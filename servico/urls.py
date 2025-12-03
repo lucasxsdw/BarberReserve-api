@@ -5,7 +5,6 @@ from .viewsets import ServicoViewSet
 router = DefaultRouter()
 router.register("servicos", ServicoViewSet, basename="servico")
 
-
 urlpatterns = [
-    path("", include(router.urls))
+    path("", include(router.urls)),
 ]

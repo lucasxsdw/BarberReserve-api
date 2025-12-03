@@ -1,11 +1,12 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.exceptions import PermissionDenied
 
 from .models import Servico
 from .serializers import ServicoSerializer
 
-class ServicoViewSet(ModelViewSet):
+class ServicoViewSet(ModelViewSet):  # <- IMPORTANTE: ModelViewSet
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = ServicoSerializer
@@ -26,8 +27,6 @@ class ServicoViewSet(ModelViewSet):
         user = self.request.user
 
         if not hasattr(user, "salao"):
-            raise PermissionError("Somente salaos podem cadastrar serviços.")
+            raise PermissionDenied("Somente salões podem cadastrar serviços.")
 
         serializer.save(salao=user.salao)
-
-   
