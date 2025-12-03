@@ -1,10 +1,10 @@
-from django.urls import path
-from .views import SalaoListCreateView, MeuSalaoView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .viewsets import SalaoViewSet
+
+router = DefaultRouter()
+router.register("", SalaoViewSet, basename="salao")
 
 urlpatterns = [
-    # /api/salao/
-    path('', SalaoListCreateView.as_view(), name='salao-list-create'),
-
-    # /api/salao/meu-salao/
-    path('meu-salao/', MeuSalaoView.as_view(), name='meu-salao'),
+    path("", include(router.urls)),
 ]

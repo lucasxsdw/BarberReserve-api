@@ -1,10 +1,8 @@
-from django.urls import path, include
+# servico/urls.py
 from rest_framework.routers import DefaultRouter
 from .viewsets import ServicoViewSet
 
 router = DefaultRouter()
-router.register("servico", ServicoViewSet, basename="servico")
+router.register("", ServicoViewSet, basename="servico")
 
-urlpatterns = [
-    path("", include(router.urls)),
-]
+urlpatterns = router.urls
