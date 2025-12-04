@@ -1,8 +1,8 @@
 from rest_framework import viewsets, permissions
-from rest_framework.exceptions import NotFound
 from .models import Salao
 from .serializers import SalaoSerializer
-
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class SalaoViewSet(viewsets.ModelViewSet):
     """
@@ -13,8 +13,40 @@ class SalaoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        # só salões do usuário logado
-        return Salao.objects.filter(usuario=self.request.user)
+        # retorna todos os salões cadastrados
+        return Salao.objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(usuario=self.request.user)
+        # o salão criado pertence ao usuário logado
+        serializer.save()
+
+
+    # ROTA PERSONALIZADA PARA LISTAR TODOS OS SALÕES
+    @action(detail=False, methods=['get'], url_path='todos')
+    def listar_todos(self, request):
+        saloes = Salao.objects.all()
+        serializer = self.get_serializer(saloes, many=True)
+        return Response(serializer.data)
+    
+
+    # ROTA: /api/salao/<id>/servicos/
+    @action(detail=True, methods=['get'], url_path='servicos')
+    def listar_servicos_salao(self, request, pk=None):
+        try:
+            salao = Salao.objects.get(pk=pk)
+        except Salao.DoesNotExist:
+            return Response({"detail": "Salão não encontrado."}, status=404)
+
+        from servico.serializers import ServicoSerializer
+        servicos = salao.servicos.all()  # pelo related_name="servicos"
+        serializer = ServicoSerializer(servicos, many=True)
+        return Response(serializer.data)
+
+
+
+# O serializer já associa o salão ao usuário automaticamente.
+# Por isso, não passamos "usuario" no perform_create().
+# perform_create() apenas chama serializer.save() sem parâmetros.
+
+
+
