@@ -1,4 +1,3 @@
-# agendamento/views.py
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -30,7 +29,9 @@ class AgendamentoViewSet(viewsets.ModelViewSet):
 
         return Agendamento.objects.none()
 
-    def perform_create(self, serializer):
+    def create(self, request, *args, **kwargs):
         user = self.request.user
         cliente = getattr(user, "cliente", None)
-        serializer.save(cliente=cliente)
+        request.data['cliente'] = cliente.id
+        return super().create(request, *args, **kwargs)
+        
