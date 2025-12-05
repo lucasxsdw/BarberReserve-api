@@ -6,7 +6,7 @@ from rest_framework.exceptions import PermissionDenied
 from .models import Servico
 from .serializers import ServicoSerializer
 
-class ServicoViewSet(ModelViewSet):  # <- IMPORTANTE: ModelViewSet
+class ServicoViewSet(ModelViewSet):  
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = ServicoSerializer

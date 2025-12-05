@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .viewsets import AgendamentoViewSet
 
 router = DefaultRouter()
-router.register("agendamento", AgendamentoViewSet, basename="agendamento")
+router.register("", AgendamentoViewSet, basename="agendamento")
 
 
 urlpatterns = [

@@ -35,4 +35,18 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'first_name', 'email', 'telefone', 'tipo_perfil']
-        read_only_fields = ['id', 'email', 'tipo_perfil']
+        read_only_fields = ['id', 'tipo_perfil']
+
+    def update(self, instance, validated_data):
+        # Se email mudar, atualizar também o username
+        new_email = validated_data.get("email")
+
+        if new_email and new_email != instance.email:
+            instance.email = new_email
+            instance.username = new_email  # IMPORTANTE!
+
+        instance.first_name = validated_data.get("first_name", instance.first_name)
+        instance.telefone = validated_data.get("telefone", instance.telefone)
+
+        instance.save()
+        return instance

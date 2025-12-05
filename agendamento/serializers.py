@@ -9,7 +9,8 @@ class AgendamentoSerializer(serializers.ModelSerializer):
             "id", "cliente", "profissional", "servico",
             "data_agendada", "hora_inicio", "hora_fim"
         ]
-        read_only_fields = ("id", "data_criacao",)
+        read_only_fields = ("id",)
+        depth = 1
 
     def validate(self, attrs):
         hora_inicio = attrs.get("hora_inicio")
