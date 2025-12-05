@@ -7,7 +7,7 @@ class Salao(models.Model):
         on_delete=models.CASCADE,
         related_name='salao',
     )
-    nome = models.CharField(max_length=255)
+    nome = models.CharField(max_length=255, default="Desconhecido")
 
     def __str__(self):
         return self.nome

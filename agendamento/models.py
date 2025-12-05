@@ -12,6 +12,9 @@ class Agendamento(models.Model):
     data_agendada = models.DateField()
     hora_inicio = models.TimeField()
     hora_fim = models.TimeField()
+    
+    class Meta:
+        unique_together = ('profissional', 'data_agendada', 'hora_inicio', 'hora_fim')
 
 
     
