@@ -1,4 +1,8 @@
+# 🎥 Vídeo de Apresentação (API + Client)
 
+Para facilitar a visualização do funcionamento completo do sistema, disponibilizamos um vídeo demonstrativo no YouTube:
+
+## 👉 Assista aqui: https://www.youtube.com/watch?v=RXcHbLuPCGk
 
 ---
 
