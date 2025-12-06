@@ -1,11 +1,9 @@
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.response import Response
 from .models import Agendamento
 from .serializers import AgendamentoSerializer
-
-from rest_framework.response import Response
-from rest_framework import status
 
 class AgendamentoViewSet(viewsets.ModelViewSet):
     queryset = Agendamento.objects.all()
@@ -19,7 +17,7 @@ class AgendamentoViewSet(viewsets.ModelViewSet):
 
         if perfil == "cliente":
             try:
-                return self.queryset.filter(cliente=user.cliente)
+                return self.queryset.filter(cliente=user)
             except:
                 return Agendamento.objects.none()
 
@@ -32,20 +30,16 @@ class AgendamentoViewSet(viewsets.ModelViewSet):
         return Agendamento.objects.none()
 
     def create(self, request, *args, **kwargs):
-        user = self.request.user
-        cliente = getattr(user, "cliente", None)
+        user = request.user
+        perfil = getattr(user, "tipo_perfil", None)
 
-        if cliente is None:
+        if perfil != "cliente":
             return Response(
-                {"detail": "Usuário logado não é um cliente válido."},
-                status=status.HTTP_400_BAD_REQUEST
+                {"detail": "Somente clientes podem criar agendamentos."},
+                status=status.HTTP_403_FORBIDDEN
             )
 
-        # Cria uma cópia mutável do request.data
-        data = request.data.copy()
-        data['cliente'] = cliente.id
-
-        serializer = self.get_serializer(data=data)
+        serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
