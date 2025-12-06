@@ -1,3 +1,4 @@
+# agendamento/serializers.py
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from .models import Agendamento
@@ -5,9 +6,13 @@ from profissional.models import Profissional
 from servico.models import Servico
 
 class AgendamentoSerializer(serializers.ModelSerializer):
-    # ✅ forçando o DRF a aceitar IDs e converter para objetos
-    profissional = serializers.PrimaryKeyRelatedField(queryset=Profissional.objects.all())
-    servico = serializers.PrimaryKeyRelatedField(queryset=Servico.objects.all())
+    # Escrita: recebe só o ID
+    profissional = serializers.PrimaryKeyRelatedField(
+        queryset=Profissional.objects.all()
+    )
+    servico = serializers.PrimaryKeyRelatedField(
+        queryset=Servico.objects.all()
+    )
 
     class Meta:
         model = Agendamento
@@ -16,13 +21,38 @@ class AgendamentoSerializer(serializers.ModelSerializer):
             "data_agendada", "hora_inicio", "hora_fim"
         ]
         read_only_fields = ("id", "cliente")
-        depth = 1
+        # ⚠️ TIRA o depth, vamos montar manualmente abaixo
+        # depth = 1
 
-    # ✅ cria o agendamento preenchendo automaticamente o cliente logado
     def create(self, validated_data):
+        # cliente = usuário logado SEMPRE
         user = self.context['request'].user
         validated_data['cliente'] = user
         return super().create(validated_data)
+
+    def to_representation(self, instance):
+        """
+        Leitura: devolve objetos completos de profissional e serviço,
+        pra você ter nome, preço, etc, no Flutter.
+        """
+        data = super().to_representation(instance)
+
+        data['profissional'] = {
+            "id": instance.profissional.id,
+            "nome": instance.profissional.nome,
+            "salao": instance.profissional.salao_id,
+        }
+
+        data['servico'] = {
+            "id": instance.servico.id,
+            "nome": instance.servico.nome,
+            "descricao": instance.servico.descricao,
+            "preco": str(instance.servico.preco),
+            "duracao_minutos": instance.servico.duracao_minutos,
+            "salao": instance.servico.salao_id,
+        }
+
+        return data
 
     def validate(self, attrs):
         hora_inicio = attrs.get("hora_inicio")
